@@ -14,24 +14,24 @@ function addToCartClicked(event) {
 
 }
 function addItemToCart(title, price, imageSrc) {
-    var cartRow = document.createElement("div") //creates a div but doesnt add it to the html document
+    var cartRow = document.createElement("div")
     cartRow.classList.add("cart-row", "row")
     var cartItems = document.getElementsByClassName("cart-items")[0]
     var cartItemNames = cartItems.getElementsByClassName("cart-item-title")
     for (var items of cartItemNames) {
         if (items.innerText == title) {
             alert("You have already added this item to your cart")
-            return //code stops after this line
+            return
         }
     }
     var cartRowContents = ` 
     <div class="cart-item cart-column col-lg-3 col-3">
-        <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
-        <div class="cart-item-title mb-5">${title}</div>
+        <div class="cart-item-title">${title}</div>
+        <img class="cart-item-image mb-5" src="${imageSrc}" width="100" height="100">
     </div>
     <div class="cart-price cart-column col-lg-3 col-3">${price}</div>
     <div class="cart-quantity cart-column col-lg-3 col-3">
-        <input class="cart-quantity-input" type="text" value="1" size="4"/>
+        <input class="cart-quantity-input form-control"  type="number" value="1" size="4"/>
     </div>
     <div class="col-3 col-lg-3">
         <button class="btn btn-danger" type="button">REMOVE</button>
@@ -51,15 +51,8 @@ function removeCartItem(event) {
 var removeCartItemButtons = document.getElementsByClassName('btn-danger');
 for (var i = 0; i < removeCartItemButtons.length; i++) {
     var button = removeCartItemButtons[i];
-    //when the button is clicked, let this function be executed
     button.addEventListener("click", function (event) {
-        //event listener always returns an event object inside of the function it calls
-        //this event object has a property on it called target
-        //target is whatever button we clicked on
-
         var buttonClicked = event.target;
-        //we used parentElement twice because our button was inside a div which was inside another div
-        // and it was this grandparent div we wanted to remove
         buttonClicked.parentElement.parentElement.remove();
         updateCartTotal()
     })
@@ -80,19 +73,18 @@ function quantityChanged(event) {
 }
 
 function updateCartTotal() {
-    var cartItemContainer = document.getElementsByClassName("cart-items")[0] //we use 0 here because we only want the first div with the cart-items class 
-    var cartRows = cartItemContainer.getElementsByClassName("cart-row") //gets the cart-row divs from inside the cart-items and puts it inside cartRows variable
+    var cartItemContainer = document.getElementsByClassName("cart-items")[0]
+    var cartRows = cartItemContainer.getElementsByClassName("cart-row")
     var total = 0;
     for (var i = 0; i < cartRows.length; i++) {
         var cartRow = cartRows[i];
         var priceElement = cartRow.getElementsByClassName("cart-price")[0]
         var quantityElement = cartRow.getElementsByClassName("cart-quantity-input")[0]
-        var price = parseFloat(priceElement.innerText.replace("$", "")) //replace the dollar sign with an empty string
-        //the parseFloat converts the string of price into a number with decimals
+        var price = parseFloat(priceElement.innerText.replace("$", ""))
         var quantity = quantityElement.value
         total = total + (price * quantity)
     }
-    total = Math.round(total * 100) / 100 //to round off the total to a decimal number with two decimals
+    total = Math.round(total * 100) / 100
     document.getElementsByClassName("cart-total-price")[0].innerText = "$" + total;
 }
 
@@ -106,9 +98,16 @@ function purchaseClicked() {
     updateCartTotal();
 }
 
-
-function downloadCatalogue() {
-    const element = this.document.getElementById("catalogue")
-    console.log(element)
-    html2pdf().from(element).save();
+async function generatePDF() {
+    document.getElementById("downloadButton").innerHTML = "currently downloading, please wait";
+    var downloading = document.getElementById("whatToPrint");
+    var doc = new jsPDF("l", "pt");
+    await html2canvas(downloading, {
+        // allowTaint: true,
+        // useCORS: true,
+    }).then((canvas) => {
+        doc.addImage(canvas.toDataURL("image/png"), "PNG", 5, 5);
+    })
+    doc.save("Catalogue.pdf");
+    document.getElementById("downloadButton").innerHTML = "Click to download";
 }

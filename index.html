@@ -8,7 +8,10 @@
     <title>Li10 Brands | Store</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 </head>
+
 <body>
     <div class="container mt-5">
         <div class="row justify-content-lg-center sticky-xxl-top my-3">
@@ -58,7 +61,7 @@
                     <button class="btn btn-primary shop-item-button mb-5" type="button">ADD TO CART</button>
                 </div>
             </div>
-        
+
             <div class="shop-item col-lg-4 col-md-6 col-sm-12 text-center">
                 <div class="shop-item-title text-center fw-bold mb-2">Headphones</div>
                 <img width="300" height="200" class="shop-item-image" src="Images/5.jpg">
@@ -81,7 +84,7 @@
                 <h2 class="section-header display-6 text-center bg-dark text-white rounded my-5">CART</h2>
             </div>
         </div>
-        <section class="container content-section" id="">
+        <section class="container content-section" id="whatToPrint">
             <div class="cart-row row fw-bold mb-4">
                 <div class="cart-item cart-header cart-column col-lg-3 col-3">ITEM</div>
                 <div class="cart-price cart-header cart-column col-lg-3 col-3">PRICE</div>
@@ -89,7 +92,6 @@
                 <div class="col-lg-3 col-3"></div>
             </div>
             <div class="cart-items">
-
             </div>
             <div class="cart-total row">
                 <strong class="cart-total-title col-lg-12 text-end">Total</strong>
@@ -102,9 +104,12 @@
                     type="button">PURCHASE</button>
             </div>
         </div>
-
-        
-
+        <div class="row text-end mb-5">
+            <div class="col-12">
+                <a href="javascript:generatePDF()" id="downloadButton" class="btn btn-dark">Click to
+                    Download Catalogue</a>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
