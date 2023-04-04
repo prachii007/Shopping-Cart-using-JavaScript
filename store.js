@@ -11,8 +11,6 @@ function addToCartClicked(event) {
     var imageSrc = shopItem.getElementsByClassName("shop-item-image")[0].src
     addItemToCart(title, price, imageSrc)
     updateCartTotal()
-    alert(`${title} added to cart`)
-
 }
 function addItemToCart(title, price, imageSrc) {
     var cartRow = document.createElement("div")
