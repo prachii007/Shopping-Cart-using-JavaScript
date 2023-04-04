@@ -27,7 +27,7 @@ function addItemToCart(title, price, imageSrc) {
     var cartRowContents = ` 
     <div class="cart-item cart-column col-lg-3 col-3">
         <div class="cart-item-title">${title}</div>
-        <img class="cart-item-image mb-5" src="${imageSrc}" width="100" height="100">
+        <img class="cart-item-image mb-5 rounded" src="${imageSrc}" width="70" height="70">
     </div>
     <div class="cart-price cart-column col-lg-3 col-3">${price}</div>
     <div class="cart-quantity cart-column col-lg-3 col-3">
@@ -47,6 +47,7 @@ function removeCartItem(event) {
     buttonClicked.parentElement.parentElement.remove()
     updateCartTotal()
 }
+
 
 var removeCartItemButtons = document.getElementsByClassName('btn-danger');
 for (var i = 0; i < removeCartItemButtons.length; i++) {
